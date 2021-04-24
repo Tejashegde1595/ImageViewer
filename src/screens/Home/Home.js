@@ -25,30 +25,8 @@ class Home extends Component {
         super();
         this.state = {
             profile_picture: '../',
-            recent_media: null,
-            filtered_media: [{
-                id:14151515151,
-                caption:'Color of the cosmos',
-                mediatype:'IMAGE',
-                media_url:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png',
-                username:'tejas_hegde95',
-                timestamp:'2017-08-31T18:10:00+0000',
-            },{
-                id:14151515152,
-                caption:'Doing my Thing',
-                mediatype:'IMAGE',
-                media_url:'https://imgd.aeplcdn.com/476x268/n/cw/ec/38904/mt-15-front-view.jpeg?q=80',
-                username:'tejas_hegde95',
-                timestamp:'2017-08-31T18:10:00+0000'
-            },{
-                id:14151515153,
-                caption:'Back to the future',
-                mediatype:'IMAGE',
-                media_url:'https://assets-global.website-files.com/6005fac27a49a9cd477afb63/60576840e7d265198541a372_bavassano_homepage_gp.jpg',
-                username:'tejas_hegde95',
-                timestamp:'2017-08-31T18:10:00+0000'
-            }],
-            individual_media: [],
+            filtered_media: null,
+            media: [],
             likes: [],
             likesCount:[],
             comments: [],
@@ -67,18 +45,21 @@ class Home extends Component {
     }
 
     fetchMostRecentMedia = () => {
-  //    let url = "https://graph.instagram.com/me/media?fields=id,caption&access_token=" + sessionStorage.getItem("access-token");
-      /*fetch(url)
+      let url = "https://graph.instagram.com/me/media?fields=id,caption,media_url,username,timestamp&access_token=" + sessionStorage.getItem("access-token");
+      let likesCount=[];
+      fetch(url)
        .then(res => res.json())
       .then(
         (result) => {
+          console.log(result);
           this.setState({
-            recent_media: result.data,
-            filtered_media: result.data
+            filtered_media: result.data,
+            media: result.data
           });
-         
-          console.log(this.state.filtered_media);
-          console.log(this.state.individual_media);
+          this.state.media.map((details,index)=>{
+              likesCount.push(3);
+          })   
+          this.setState({'likesCount':likesCount});
         },
         (error) => {
           this.setState({
@@ -86,12 +67,8 @@ class Home extends Component {
             error
           });
         }
-      ) */
-        let likesCount=[];
-        this.state.filtered_media.map((details,index)=>{
-            likesCount.push(7);
-        })   
-        this.setState({'likesCount':likesCount});
+      ) 
+       
 
     }
 
@@ -107,33 +84,8 @@ class Home extends Component {
         }
         this.setState({likesCount:likesCount});
         this.setState({likes: currentLikes});
-        console.log(this.state.likes);
-        console.log(this.state.likesCount);
     }
-
-
-    fetchIndividualMedia=(details)=>{
-           const individualMedia = [...this.state.individual_media];
-           var url = "https://graph.instagram.com/"+details.id+"?fields=id,media_type,media_url,username,timestamp&access_token=" + sessionStorage.getItem("access-token");
-           fetch(url)
-           .then(res => res.json())
-           .then(
-           (result) => {
-           console.log(result);
-           individualMedia.push(result);
-           this.setState({individual_media:individualMedia});
-           },
-           (error) => {
-           this.setState({
-             isLoaded: true,
-             error
-           });
-         } 
-       )
-         
-     }
-    
-    
+   
 
     onAddComment = (index) => {
         var textfield = document.getElementById("textfield-" + index);
@@ -155,21 +107,21 @@ class Home extends Component {
     onSearch = (e) => {
         this.setState({'searchText': e.target.value})
         if (this.state.searchText == null || this.state.searchText.trim() === "") {
-            this.setState({filtered_media: this.state.recent_media});
+            this.setState({media: this.state.filtered_media});
         } else {
-            let filteredRecentMedia = this.state.recent_media.filter((element) => {
-                return element.caption.text.toUpperCase().split("\n")[0].indexOf(e.target.value.toUpperCase()) > -1
+            let filteredRecentMedia = this.state.filtered_media.filter((element) => {
+                if(element.caption !== undefined)
+                    return element.caption.toUpperCase().split("\n")[0].indexOf(e.target.value.toUpperCase()) > -1
             });
-            this.setState({filtered_media: filteredRecentMedia});
+            this.setState({media: filteredRecentMedia});
         }
     }
 
     render() {
-        console.log('logging while rendering',this.state.filtered_media);
         const display= <Container className='posts-card-container'>
         <Grid container spacing={2} alignContent='center' justify='flex-start' direction='row'>
             {
-                (this.state.filtered_media || []).map((details, index) => {
+                (this.state.media || []).map((details, index) => {
                     return(
                     <Grid item xs={6} key={details.id}>
                         <Card key={details.id + '_card'}>
