@@ -3,15 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from 'react-router-dom'
-import Routes from './common/Routes/Routes';
-import Header from './common/Header/Header';
+import ImageViewer from './ImageViewer';
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-      <div>
-        <Header></Header>
-        <Routes/>
-      </div>
+      <ImageViewer></ImageViewer>
     </Router>
   </React.StrictMode>,
   document.getElementById('root')

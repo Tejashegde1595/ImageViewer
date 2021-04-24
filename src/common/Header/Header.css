@@ -1,5 +1,28 @@
-.logo{
-    color:#fff;
-    font-size: 18px;
+.header-flex-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background: #263238; /* Header background color */
+    height: 60px;
+}
+
+.logo {
+    color: #fff; /* Header logo text color */
+    padding: 20px 20px 19px 20px; /* this makes sure that the logo is vertically in the center */
+    font-weight: bold;
+    font-size: 18px; /* font size of logo text */
+    cursor: pointer;
+}
+
+.header-right-flex-container{
+    display: flex;
+}
+
+.search-box {
+    border-radius: 4px; /* Border radius 4px*/
+    width: 300px; /* Width of the search box 300px */
+    background: #c0c0c0; /* Background color of the box */
+    height: 40px;
+    margin: 10px 0px 10px 0px; /* Display search-box vertically in the center*/
 }
 

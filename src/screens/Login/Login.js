@@ -11,9 +11,10 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import history from '../../common/Routes/history';
-
+import {Redirect} from 'react-router-dom';
 
 import './Login.css';
+import Header from '../../common/Header/Header';
 
 
 const TabContainer=(props)=>{
@@ -27,6 +28,11 @@ TabContainer.protoTypes = {
     children:PropTypes.node.isRequired
 }
 
+const userDetails = {
+    username: 'admin',
+    password: 'admin',
+    accessToken: 'IGQVJWWWFwMV9JY3FWY1AxYXZAUY3J6UEdIVXUwNGFxQUlTZA0VLQ3NtbVBVYUw1LUQ3ZA3ZAaMmRRVDdycnZAkTjVFRDlsZAm9id2ZA1RXlOMEVFdXNUQ1hQV0FYcWxPbkRHeS16aEFuUndISlpoN09IbkU0aQZDZD'
+};
 
 class Login extends Component{
     constructor(){
@@ -36,7 +42,8 @@ class Login extends Component{
             passwordRequired:'dispNone',
             passwordAndUsernameRequired:'dispNone',
             username:'',
-            password:''
+            password:'',
+            loginSuccess: false
         }
     }
 
@@ -57,8 +64,10 @@ class Login extends Component{
             this.setState({passwordAndUsernameRequired:'dispNone'})
             return;
         }else{
-            if(this.state.username==='Username' && this.state.password==='Password'){
-                history.push("/Home");
+            if(this.state.username===userDetails.username && this.state.password===userDetails.password){
+                this.setState({incorrectCredentialHelperTextDisplay: 'display-none', loginSuccess: true});
+                sessionStorage.setItem("access-token", userDetails.accessToken);
+                history.push()
             }else{
                 this.setState({passwordAndUsernameRequired:'dispBlock',userNameRequired:'dispNone',passwordRequired:'dispNone'});
             }
@@ -66,7 +75,12 @@ class Login extends Component{
     }
 
     render(){
+        if (this.state.loginSuccess === true) {
+            return <Redirect to={{pathname: '/home', state: {loginSuccess: true}}}/>
+        }
         return(
+        <div>
+        <Header/>
         <Card className='loginForm' variant="outlined">
             <CardContent>
               <CardHeader title='LOGIN' className='loginHeader'></CardHeader>
@@ -87,7 +101,7 @@ class Login extends Component{
               <Button variant='contained' color='primary' onClick={this.loginClickHandler}>Login</Button>
             </CardActions>
         </Card>
-
+        </div>
         
         )
     }
