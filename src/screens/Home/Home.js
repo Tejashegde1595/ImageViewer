@@ -25,6 +25,8 @@ class Home extends Component {
     constructor() {
         super();
         this.state = {
+            accessToken: sessionStorage.getItem("access-token"),
+            loggedIn: sessionStorage.getItem("access-token") === null ? false : true,
             profile_picture: '../',
             filtered_media: null,
             media: [],
@@ -106,8 +108,9 @@ class Home extends Component {
     }
 
     onSearch = (e) => {
-        this.setState({'searchText': e.target.value})
-        if (this.state.searchText == null || this.state.searchText.trim() === "") {
+
+        if (e.target.value == null || e.target.value.trim() === "") {
+            console.log('media',this.state.filtered_media);
             this.setState({media: this.state.filtered_media});
         } else {
             let filteredRecentMedia = this.state.filtered_media.filter((element) => {
@@ -132,7 +135,7 @@ class Home extends Component {
                         <Card key={details.id + '_card'}>
                             <CardHeader
                                 avatar={<Avatar variant="circle" src={profilePicture} className='avatar'/>}
-                                title={details.id}
+                                title={details.username}
                                 subheader={new Date(details.timestamp).toLocaleString()}/>
                                 <div style={{display: "none"}}>{details.media_type}</div>
                             <CardMedia style={{height: 0, paddingTop: '56.25%', marginBottom: 5}}
@@ -145,7 +148,7 @@ class Home extends Component {
                                     className='post-caption'>{details.caption}</div>
 
                                 <div className='post-tags'>
-                                    {details.username}
+                                    #fresh#upgrad
                                 </div>
                                 <br/>
                                 <div className='likes'>
@@ -195,7 +198,7 @@ class Home extends Component {
             }
         </Grid>
         </Container> 
-        if (this.props.location.state === undefined) {
+        if (!this.state.loggedIn) {
             return <Redirect to='/'/>
         }
         if(this.state.isProfile){

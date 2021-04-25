@@ -29,8 +29,8 @@ TabContainer.protoTypes = {
 }
 
 const userDetails = {
-    username: 'admin',
-    password: 'admin',
+    username: 'Username',
+    password: 'Password',
     accessToken: 'IGQVJWWWFwMV9JY3FWY1AxYXZAUY3J6UEdIVXUwNGFxQUlTZA0VLQ3NtbVBVYUw1LUQ3ZA3ZAaMmRRVDdycnZAkTjVFRDlsZAm9id2ZA1RXlOMEVFdXNUQ1hQV0FYcWxPbkRHeS16aEFuUndISlpoN09IbkU0aQZDZD'
 };
 
