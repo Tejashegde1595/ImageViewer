@@ -1,0 +1,27 @@
+.loginForm{
+    margin: auto;
+    width: max-content;
+    padding: 40px;
+    margin-top: 30px;
+}
+
+.loginContent{
+    width: 350px;
+}
+
+.loginHeader{
+    font-weight: bolder;
+    font-size: medium;
+}
+
+.dispNone{
+    display: none;
+}
+
+.dispBlock{
+  display: block;
+}
+
+.red{
+    color: red;
+}
