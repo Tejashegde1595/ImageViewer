@@ -107,14 +107,12 @@ class Profile extends Component {
     }
 
     componentWillMount() {
-        console.log('login',this.props);
       let url = "https://graph.instagram.com/me/media?fields=id,caption,media_url,username,timestamp&access_token=" + sessionStorage.getItem("access-token");
       const likesCount=[]
       fetch(url)
       .then(res => res.json())
       .then(
         (result) => {
-          console.log(result);
           this.setState({
             media: result.data,
             username:result.data[0].username!==undefined?result.data[0].username:'Tejas Hegde',
@@ -167,7 +165,6 @@ class Profile extends Component {
     }
 
     openMediaModalHandler=(details)=>{
-        console.log(details);
         let updateIndex=0;
         const individualMedia = this.state.media.filter((image,index)=>{
             if(image.id==details)
@@ -180,44 +177,12 @@ class Profile extends Component {
         });
         this.setState({individualMedia:individualMedia,index:updateIndex});
         this.setState({mediaModalIsOpen:!this.state.mediaModalIsOpen});
-     //   console.log('Index is',this.state.index);
     }
 
     onChangeProp=()=>{
-        console.log('On Change Prop');
         this.setState({propChange:!this.state.propChange});
     }
 
-    /*  onFavIconClick = (index) => {
-        let currentLikes = this.state.likes;
-        currentLikes[index] = !currentLikes[index];
-        let likesCount = this.state.likesCount;
-        if(currentLikes[index]){
-            likesCount[index]=likesCount[index]+1;
-        }else{
-            likesCount[index]=likesCount[index]-1;
-        }
-        this.setState({likesCount:likesCount});
-        this.setState({likes: currentLikes});
-    }
-   
-
-    onAddComment = (index) => {
-        var textfield = document.getElementById("textfield-" + index);
-        if (textfield.value == null || textfield.value.trim() === "") {
-            return;
-        }
-        let currentComment = this.state.comments;
-        if (currentComment[index] === undefined) {
-            currentComment[index] = [textfield.value];
-        } else {
-            currentComment[index] = currentComment[index].concat([textfield.value]);
-        }
-
-        textfield.value = '';
-
-        this.setState({'comments': currentComment})
-    }  */
 
     render() {
         if (!this.state.loggedIn) {
@@ -226,7 +191,6 @@ class Profile extends Component {
             )
         }
         const { classes } = this.props;
-        console.log('props are',this.props);
         return (
             <div>
                 <Header isLoggedIn={true} history={this.props.history}  profilePictureUrl={profilePicture}/>

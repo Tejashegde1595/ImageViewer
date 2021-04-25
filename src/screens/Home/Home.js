@@ -53,7 +53,6 @@ class Home extends Component {
        .then(res => res.json())
       .then(
         (result) => {
-          console.log(result);
           this.setState({
             filtered_media: result.data,
             media: result.data
@@ -75,7 +74,6 @@ class Home extends Component {
     }
 
     onFavIconClick = (index) => {
-        console.log('likesCounter',this.state.likesCount);
         let currentLikes = this.state.likes;
         currentLikes[index] = !currentLikes[index];
         let likesCount = this.state.likesCount;
@@ -86,8 +84,7 @@ class Home extends Component {
         }
         this.setState({likesCount:likesCount});
         this.setState({likes: currentLikes});
-        console.log('likesCounter re',this.state.likesCount);
-        console.log('likes re',this.state.likes);
+
     }
    
 
@@ -123,11 +120,9 @@ class Home extends Component {
 
     onIsProfileClicked=(e)=>{
         this.setState({isProfile:true});
-        console.log('is profile clicked');
     }
 
     render() {
-        console.log('home');
         const display= <Container className='posts-card-container'>
         <Grid container spacing={2} alignContent='center' justify='flex-start' direction='row'>
             {

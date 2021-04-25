@@ -80,21 +80,8 @@ class Header extends Component {
     }
 
     onMyAccount = () => {
-        console.log('profile',this.props);
         this.props.onIsProfileClicked();
-    /*     this.props.history.push({
-            pathname: '/home',
-            state:
-                {
-                    loginSuccess: true,
-                    likes:this.props.likes,
-                    liked:this.props.liked,
-                    comments:this.props.comments
-                },
-            function:{
-                onLike:this.props.onLike
-            }
-        });  */
+
     }
 
     onLogout = () => {
