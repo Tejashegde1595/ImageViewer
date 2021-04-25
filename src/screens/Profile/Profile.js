@@ -100,13 +100,14 @@ class Profile extends Component {
             likes: [],
             likesCount:[],
             comments: [],
-            index:0
+            index:0,
+            propChange:false
             
         };
     }
 
     componentWillMount() {
-        console.log('login',this.props.loginSuccess);
+        console.log('login',this.props);
       let url = "https://graph.instagram.com/me/media?fields=id,caption,media_url,username,timestamp&access_token=" + sessionStorage.getItem("access-token");
       const likesCount=[]
       fetch(url)
@@ -182,7 +183,12 @@ class Profile extends Component {
      //   console.log('Index is',this.state.index);
     }
 
-    onFavIconClick = (index) => {
+    onChangeProp=()=>{
+        console.log('On Change Prop');
+        this.setState({propChange:!this.state.propChange});
+    }
+
+    /*  onFavIconClick = (index) => {
         let currentLikes = this.state.likes;
         currentLikes[index] = !currentLikes[index];
         let likesCount = this.state.likesCount;
@@ -211,7 +217,7 @@ class Profile extends Component {
         textfield.value = '';
 
         this.setState({'comments': currentComment})
-    }
+    }  */
 
     render() {
         if (!this.state.loggedIn) {
@@ -220,9 +226,10 @@ class Profile extends Component {
             )
         }
         const { classes } = this.props;
+        console.log('props are',this.props);
         return (
             <div>
-                <Header loggedIn={this.state.loggedIn} history={this.props.history} />
+                <Header isLoggedIn={true} history={this.props.history}  profilePictureUrl={profilePicture}/>
                 <div className="info-section">
                     <Avatar variant="circular" alt="Profile Picture" src={profilePic}
                         className={classes.avatar}></Avatar>
@@ -319,8 +326,8 @@ class Profile extends Component {
                                     <br/>
                                     <div id='all-comments'>
                                             {
-                                                this.state.comments[this.state.index] ?
-                                                    (this.state.comments)[this.state.index].map((comment, index) => (
+                                                this.props.location.state.comments[this.state.index] ?
+                                                    (this.props.location.state.comments)[this.state.index].map((comment, index) => (
                                                         <p key={index}>
                                                             <b>{this.state.individualMedia.username}</b> : {comment}
                                                         </p>
@@ -331,38 +338,38 @@ class Profile extends Component {
                                     </div>
                                     <br/>
                                     <br/>
-                                    <div className='likes'>
+                                    <div className='likes' onClick={this.onChangeProp}>
                                             {
-                                                this.state.likes[this.state.index] ?
+                                                this.props.location.state.liked[this.state.index] ?
                                                     <FavoriteIcon fontSize='default' style={{color: red[500]}}
-                                                                onClick={() => this.onFavIconClick(this.state.index)}/>
+                                                                onClick={() => this.props.location.function.onLike(this.state.index)}/>
                                                     :
                                                     <FavoriteBorderIcon fontSize='default'
-                                                                        onClick={() => this.onFavIconClick(this.state.index)}/>
+                                                                        onClick={() => this.props.location.function.onLike(this.state.index)}/>
                                             }
 
                                             <pre> </pre>
                                             <Typography>
-                                                <span>{this.state.likesCount[this.state.index] + ' likes'}</span>
+                                                <span>{this.props.location.state.likes[this.state.index] + ' likes'}</span>
                                             </Typography>
                                     </div>
                                   
 
 
-                                    <div className='post-comment'>
+                                    <div className='post-comment'  onClick={this.onChangeProp}>
                                             <FormControl className='post-comment-form-control'>
                                                 <TextField id={'textfield-' + this.state.index} label="Add a comment"/>
                                             </FormControl>
                                             <div className='add-button'>
                                                 <FormControl>
                                                     <Button variant='contained' color='primary'
-                                                            onClick={() => this.onAddComment(this.state.index)}>ADD</Button>
+                                                            onClick={() => this.props.location.function.onComment(this.state.index)}>ADD</Button>
                                                 </FormControl>
                                             </div>
                                     </div>
                                     </CardContent>
                                 </div>
-                        </div>
+                        </div>  
                         </Card>
                 </Modal>
             </div>

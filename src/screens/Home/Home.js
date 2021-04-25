@@ -19,6 +19,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import profilePicture from '../../assets/tejas.jpeg';
 import {red} from '@material-ui/core/colors';
+import Profile from '../Profile/Profile';
 class Home extends Component {
 
     constructor() {
@@ -33,7 +34,8 @@ class Home extends Component {
             searchText: '',
             isLoaded:false,
             error:false,
-            counter:0
+            counter:0,
+            isProfile:false
         }
     }
 
@@ -84,6 +86,8 @@ class Home extends Component {
         }
         this.setState({likesCount:likesCount});
         this.setState({likes: currentLikes});
+        console.log('likesCounter re',this.state.likesCount);
+        console.log('likes re',this.state.likes);
     }
    
 
@@ -117,7 +121,13 @@ class Home extends Component {
         }
     }
 
+    onIsProfileClicked=(e)=>{
+        this.setState({isProfile:true});
+        console.log('is profile clicked');
+    }
+
     render() {
+        console.log('home');
         const display= <Container className='posts-card-container'>
         <Grid container spacing={2} alignContent='center' justify='flex-start' direction='row'>
             {
@@ -193,13 +203,16 @@ class Home extends Component {
         if (this.props.location.state === undefined) {
             return <Redirect to='/'/>
         }
+        if(this.state.isProfile){
+            return <Redirect to={{pathname:'/profile',state: {loginSuccess:true,liked:this.state.likes,likes:this.state.likesCount,comments:this.state.comments},function:{onLike:this.onFavIconClick,onComment:this.onAddComment} }}></Redirect>
+        }
        if (this.props.location.state.loginSuccess === true) {
             return <div>
                  <div><Header {...this.props} isLoggedIn={true} showSearchBox={true}
                              profilePictureUrl={this.state.profile_picture}
                              onSearch={this.onSearch} showMyAccount={true} onLike={this.onFavIconClick} onComment={this.onAddComment} likes={this.state.likesCount} 
-                             liked={this.state.likes} comments={this.state.comments}
-                             
+                             liked={this.state.likes} comments={this.state.comments} isProfile={this.state.isProfile}
+                             onIsProfileClicked={this.onIsProfileClicked} 
                              /></div>
                  {display}
             </div>
