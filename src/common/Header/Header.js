@@ -82,7 +82,7 @@ class Header extends Component {
     onMyAccount = () => {
         console.log('profile',this.props);
         this.props.onIsProfileClicked();
-        this.props.history.push({
+    /*     this.props.history.push({
             pathname: '/home',
             state:
                 {
@@ -94,7 +94,7 @@ class Header extends Component {
             function:{
                 onLike:this.props.onLike
             }
-        }); 
+        });  */
     }
 
     onLogout = () => {
