@@ -16,8 +16,12 @@ import Button from '@material-ui/core/Button';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
-import {Card,CardContent,CardHeader,CardMedia,Divider} from '@material-ui/core'
+import {Card,CardContent,CardHeader,CardMedia,Divider,TextField} from '@material-ui/core'
 import profilePicture from '../../assets/tejas.jpeg';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import {red} from '@material-ui/core/colors';
+
 const styles = theme => ({
     avatar: {
         width: 150,
@@ -85,8 +89,8 @@ class Profile extends Component {
             username: '',
             media: [],
             numOfPosts: 0,
-            followers: 300,
-            following: 250,
+            followers: 200,
+            following: 150,
             name: 'Tejas Hegde',
             modalIsopen: false,
             mediaModalIsOpen:false,
@@ -96,11 +100,13 @@ class Profile extends Component {
             likes: [],
             likesCount:[],
             comments: [],
+            index:0
             
         };
     }
 
     componentWillMount() {
+        console.log('login',this.props.loginSuccess);
       let url = "https://graph.instagram.com/me/media?fields=id,caption,media_url,username,timestamp&access_token=" + sessionStorage.getItem("access-token");
       const likesCount=[]
       fetch(url)
@@ -113,7 +119,7 @@ class Profile extends Component {
             username:result.data[0].username!==undefined?result.data[0].username:'Tejas Hegde',
             numOfPosts:result.data.length
           });
-          this.state.media.map((details,index)=>{
+          this.state.media.forEach((details)=>{
             likesCount.push(3);
         })   
         this.setState({'likesCount':likesCount});
@@ -160,17 +166,23 @@ class Profile extends Component {
     }
 
     openMediaModalHandler=(details)=>{
+        console.log(details);
+        let updateIndex=0;
         const individualMedia = this.state.media.filter((image,index)=>{
-            if(image.id===details)
+            if(image.id==details)
                 return image;
         })[0];
-        this.setState({individualMedia:individualMedia});
+        this.state.media.forEach((image,index)=>{
+            if(image.id==details){
+                updateIndex=index;
+            }
+        });
+        this.setState({individualMedia:individualMedia,index:updateIndex});
         this.setState({mediaModalIsOpen:!this.state.mediaModalIsOpen});
-        console.log(individualMedia);
+     //   console.log('Index is',this.state.index);
     }
 
     onFavIconClick = (index) => {
-        console.log('likesCounter',this.state.likesCount);
         let currentLikes = this.state.likes;
         currentLikes[index] = !currentLikes[index];
         let likesCount = this.state.likesCount;
@@ -294,27 +306,59 @@ class Profile extends Component {
                         <div className={classes.profileContent}>
                                 <CardHeader
                                     avatar={<Avatar variant="circle" src={profilePicture}/>}
-                                    
+                                    title={this.state.individualMedia.username}
                                 />                                      
                                 <Divider variant="middle" className='divider'/>
                                 <CardContent>
                                     <div
                                         className='post-caption'>{this.state.individualMedia.caption}</div>
 
-                                    <div className='post-tags'>
-                                        {this.state.individualMedia.username}
+                                    <div className='post-tags' style={{color:'blue'}}>
+                                        #fresh
                                     </div>
                                     <br/>
-                                    <div className='likes'>
-                                        
-                                    </div>
-
                                     <div id='all-comments'>
-                                    
+                                            {
+                                                this.state.comments[this.state.index] ?
+                                                    (this.state.comments)[this.state.index].map((comment, index) => (
+                                                        <p key={index}>
+                                                            <b>{this.state.individualMedia.username}</b> : {comment}
+                                                        </p>
+                                                    ))
+                                                    :
+                                                    <p></p>
+                                            }
                                     </div>
+                                    <br/>
+                                    <br/>
+                                    <div className='likes'>
+                                            {
+                                                this.state.likes[this.state.index] ?
+                                                    <FavoriteIcon fontSize='default' style={{color: red[500]}}
+                                                                onClick={() => this.onFavIconClick(this.state.index)}/>
+                                                    :
+                                                    <FavoriteBorderIcon fontSize='default'
+                                                                        onClick={() => this.onFavIconClick(this.state.index)}/>
+                                            }
+
+                                            <pre> </pre>
+                                            <Typography>
+                                                <span>{this.state.likesCount[this.state.index] + ' likes'}</span>
+                                            </Typography>
+                                    </div>
+                                  
+
 
                                     <div className='post-comment'>
-                                        
+                                            <FormControl className='post-comment-form-control'>
+                                                <TextField id={'textfield-' + this.state.index} label="Add a comment"/>
+                                            </FormControl>
+                                            <div className='add-button'>
+                                                <FormControl>
+                                                    <Button variant='contained' color='primary'
+                                                            onClick={() => this.onAddComment(this.state.index)}>ADD</Button>
+                                                </FormControl>
+                                            </div>
                                     </div>
                                     </CardContent>
                                 </div>

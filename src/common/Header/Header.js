@@ -84,7 +84,7 @@ class Header extends Component {
             pathname: '/profile',
             state:
                 {
-                    loginSuccess: true
+                    loginSuccess: true,
                 }
         });
     }

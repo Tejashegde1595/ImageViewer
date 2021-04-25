@@ -197,7 +197,10 @@ class Home extends Component {
             return <div>
                  <div><Header {...this.props} isLoggedIn={true} showSearchBox={true}
                              profilePictureUrl={this.state.profile_picture}
-                             onSearch={this.onSearch} showMyAccount={true}/></div>
+                             onSearch={this.onSearch} showMyAccount={true} onLike={this.onFavIconClick} onComment={this.onAddComment} likes={this.state.likesCount} 
+                             liked={this.state.likes} comments={this.state.comments}
+                             
+                             /></div>
                  {display}
             </div>
         }  
