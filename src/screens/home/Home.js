@@ -122,7 +122,6 @@ class Home extends Component {
     onSearch = (e) => {
 
         if (e.target.value == null || e.target.value.trim() === "") {
-            console.log('media',this.state.filtered_media);
             this.setState({media: this.state.filtered_media});
         } else {
             let filteredRecentMedia = this.state.filtered_media.filter((element) => {
@@ -152,7 +151,7 @@ class Home extends Component {
                     <Grid item xs={6} key={details.id}>
                         <Card key={details.id + '_card'}>
                             <CardHeader
-                                avatar={<Avatar variant="circle" src={profilePicture}/>}
+                                avatar={<Avatar variant="circular" src={profilePicture}/>}
                                 title={details.username}
                                 subheader={new Date(details.timestamp).toLocaleString()}/>
                                 <div style={{display: "none"}}>{details.media_type}</div>

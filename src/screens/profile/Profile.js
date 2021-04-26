@@ -296,7 +296,7 @@ class Profile extends Component {
                         </div>
                         <div className={classes.profileContent}>
                                 <CardHeader
-                                    avatar={<Avatar variant="circle" src={profilePicture}/>}
+                                    avatar={<Avatar variant="circular" src={profilePicture}/>}
                                     title={this.state.individualMedia.username}
                                 />                                      
                                 <Divider variant="middle" className='divider'/>

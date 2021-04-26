@@ -5,11 +5,9 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from 'react-router-dom'
 import ImageViewer from './ImageViewer';
 ReactDOM.render(
-  <React.StrictMode>
     <Router>
       <ImageViewer></ImageViewer>
-    </Router>
-  </React.StrictMode>,
+    </Router>,
   document.getElementById('root')
 );
 
