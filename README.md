@@ -1,3 +1,13 @@
+Username and Password for Login is hardcoded in the Login.js file
+
+Username:- Username
+Password:- Password
+
+Access token may expire after some time please enter the required latest access token to enjoy the app.
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
