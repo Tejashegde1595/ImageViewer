@@ -46,14 +46,24 @@ class Login extends Component{
             loginSuccess: false
         }
     }
-
+    /*
+        Function to handler change in Input for Username
+    */
     inputUserNameChangeHandler=(e)=>{
         this.setState({username:e.target.value})
     }
 
+    /*
+        Function to handler change in Input for Password
+    */
+
     inputPasswordChangeHandler=(e)=>{
         this.setState({password:e.target.value})
     }
+
+    /*
+        Function to handler changes after clicking the Login button
+    */
 
     loginClickHandler=()=>{
         if(this.state.username==='' || this.state.password===''){
@@ -73,7 +83,9 @@ class Login extends Component{
             }
         }
     }
-
+    /*
+    Function to render the page
+    */
     render(){
         if (this.state.loginSuccess === true) {
             return <Redirect to={{pathname: '/home', state: {loginSuccess: true}}}/>
