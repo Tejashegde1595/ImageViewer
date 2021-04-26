@@ -105,7 +105,9 @@ class Profile extends Component {
             
         };
     }
-
+    /*
+        React hook to get all the necessary information by calling the instagram api
+    */
     componentWillMount() {
       let url = "https://graph.instagram.com/me/media?fields=id,caption,media_url,username,timestamp&access_token=" + sessionStorage.getItem("access-token");
       const likesCount=[]
@@ -133,23 +135,34 @@ class Profile extends Component {
 
 
     }
-
+    /*
+        Function to help open the edit modal handler of profile
+    */
     openEditModalHandler = () => {
         this.setState({ modalIsopen: !this.state.modalIsopen })
     }
 
+    /*
+        Function to help close the edit modal handler of profile
+    */
     closeModalHandler = () => {
         this.setState({ modalIsopen: !this.state.modalIsopen })
     }
-
+    /*
+        Function to help close the image modal handler of profile
+    */
     closeMediaModalHandler = () => {
         this.setState({ mediaModalIsOpen: !this.state.mediaModalIsOpen })
     }
-
+     /*
+        Function to help detect the changes in input for updation
+    */
     inputFullNameChangeHandler = (event) => {
         this.setState({ fullName: event.target.value })
     }
-
+     /*
+        Function to help update the changes in input for profile name
+    */
     updateHandler = () => {
         if (this.state.fullName === "" ) {
             this.setState({ fullNameRequired: 'dispBlock' })
@@ -164,6 +177,9 @@ class Profile extends Component {
         })
     }
 
+     /*
+        Function to help open the image modal handler of profile
+    */
     openMediaModalHandler=(details)=>{
         let updateIndex=0;
         const individualMedia = this.state.media.filter((image,index)=>{
@@ -178,12 +194,16 @@ class Profile extends Component {
         this.setState({individualMedia:individualMedia,index:updateIndex});
         this.setState({mediaModalIsOpen:!this.state.mediaModalIsOpen});
     }
-
+     /*
+        Function to detect the changes on like and comment and render the props
+    */
     onChangeProp=()=>{
         this.setState({propChange:!this.state.propChange});
     }
 
-
+    /*
+        Function to render the profile component
+    */
     render() {
         if (!this.state.loggedIn || this.props.location.function==undefined) {
             return (

@@ -67,6 +67,10 @@ class Header extends Component {
         </div>
     }
 
+    /*
+        Function to navigaate to home on logo click
+    */
+
     onLogoClick = () => {
         this.props.history.push({
                 pathname: '/home',
@@ -78,21 +82,31 @@ class Header extends Component {
         )
         ;
     }
-
+    /*
+        Function to navigaate to profile on My Account click
+    */
     onMyAccount = () => {
         this.props.onIsProfileClicked();
 
     }
-
+    /*
+        Function to logout and redirect to login page
+    */
     onLogout = () => {
         sessionStorage.removeItem('access-token');
         this.setState({loggedOut: true})
     }
 
+    /*
+        Function to handle on Profile icon click
+    */
     onProfileIconClick = (e) => {
         this.setState({'menuState': !this.state.menuState, 'anchorEl': e.currentTarget});
     }
 
+    /*
+        Function to handle Menu Close Functionality
+    */
     onMenuClose = () => {
         this.setState({'menuState': !this.state.menuState, 'anchorEl': null});
     }

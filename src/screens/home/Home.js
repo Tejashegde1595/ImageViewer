@@ -41,11 +41,17 @@ class Home extends Component {
         }
     }
 
+    /*
+        Function to call the api and get all the necessary details required on mounting
+    */
     componentDidMount() {
            // this.fetchOwnerInfo();
              this.fetchMostRecentMedia();
     
     }
+     /*
+        Function to get the api results and set the states
+    */
 
     fetchMostRecentMedia = () => {
       let url = "https://graph.instagram.com/me/media?fields=id,caption,media_url,username,timestamp&access_token=" + sessionStorage.getItem("access-token");
@@ -74,6 +80,9 @@ class Home extends Component {
 
     }
 
+    /*
+    Function to handle the changes on click of Like Button
+    */
     onFavIconClick = (index) => {
         let currentLikes = this.state.likes;
         currentLikes[index] = !currentLikes[index];
@@ -88,7 +97,9 @@ class Home extends Component {
 
     }
    
-
+    /*
+    Function to handle changes on Adding comment
+    */
     onAddComment = (index) => {
         var textfield = document.getElementById("textfield-" + index);
         if (textfield.value == null || textfield.value.trim() === "") {
@@ -105,7 +116,9 @@ class Home extends Component {
 
         this.setState({'comments': currentComment})
     }
-
+     /*
+    Function to implement filtering on Search
+    */
     onSearch = (e) => {
 
         if (e.target.value == null || e.target.value.trim() === "") {
@@ -120,10 +133,16 @@ class Home extends Component {
         }
     }
 
+    /*
+    Function to implement dom Manipulations on like and comment
+    */
     onIsProfileClicked=(e)=>{
         this.setState({isProfile:true});
     }
 
+    /*
+    Function to render the home component on successful login
+    */
     render() {
         const display= <Container className='posts-card-container'>
         <Grid container spacing={2} alignContent='center' justify='flex-start' direction='row'>
