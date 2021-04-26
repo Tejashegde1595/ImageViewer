@@ -1,8 +1,8 @@
 import React, {Component, Fragment} from 'react'
 import {Route, Switch} from "react-router-dom"; // For redirection
-import Login from "./screens/Login/Login";
-import Home from "./screens/Home/Home";
-import Profile from "./screens/Profile/Profile";
+import Login from "./screens/login/Login";
+import Home from "./screens/home/Home";
+import Profile from "./screens/profile/Profile";
 
 
 /**
