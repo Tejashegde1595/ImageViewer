@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Redirect} from 'react-router-dom';
-import './Profile.css';
-import Header from '../../common/Header/Header';
+import '../profile/Profile.css';
+import Header from '../../common/header/Header';
 import profilePic from '../../assets/tejas.jpeg';
 import Avatar from '@material-ui/core/Avatar';
 import {withStyles} from '@material-ui/core/styles';
@@ -185,7 +185,7 @@ class Profile extends Component {
 
 
     render() {
-        if (!this.state.loggedIn) {
+        if (!this.state.loggedIn || this.props.location.function==undefined) {
             return (
                 <Redirect to="/" />
             )

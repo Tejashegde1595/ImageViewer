@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import Header from "../../common/Header/Header";
-import './Home.css'
+import Header from "../../common/header/Header";
+import '../home/Home.css';
 import {Redirect} from 'react-router-dom';
 import {
     Avatar,
@@ -19,7 +19,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import profilePicture from '../../assets/tejas.jpeg';
 import {red} from '@material-ui/core/colors';
-import Profile from '../Profile/Profile';
+import Profile from '../profile/Profile';
 class Home extends Component {
 
     constructor() {
@@ -42,10 +42,9 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        if (this.props.location.state !== undefined) {
            // this.fetchOwnerInfo();
              this.fetchMostRecentMedia();
-        }
+    
     }
 
     fetchMostRecentMedia = () => {
@@ -134,7 +133,7 @@ class Home extends Component {
                     <Grid item xs={6} key={details.id}>
                         <Card key={details.id + '_card'}>
                             <CardHeader
-                                avatar={<Avatar variant="circle" src={profilePicture} className='avatar'/>}
+                                avatar={<Avatar variant="circle" src={profilePicture}/>}
                                 title={details.username}
                                 subheader={new Date(details.timestamp).toLocaleString()}/>
                                 <div style={{display: "none"}}>{details.media_type}</div>
@@ -148,7 +147,7 @@ class Home extends Component {
                                     className='post-caption'>{details.caption}</div>
 
                                 <div className='post-tags'>
-                                    #fresh#upgrad
+                                    #fresh #upgrad
                                 </div>
                                 <br/>
                                 <div className='likes'>
@@ -204,7 +203,7 @@ class Home extends Component {
         if(this.state.isProfile){
             return <Redirect to={{pathname:'/profile',state: {loginSuccess:true,liked:this.state.likes,likes:this.state.likesCount,comments:this.state.comments},function:{onLike:this.onFavIconClick,onComment:this.onAddComment} }}></Redirect>
         }
-       if (this.props.location.state.loginSuccess === true) {
+       if (this.state.loggedIn === true) {
             return <div>
                  <div><Header {...this.props} isLoggedIn={true} showSearchBox={true}
                              profilePictureUrl={this.state.profile_picture}
